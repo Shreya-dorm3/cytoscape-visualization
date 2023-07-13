@@ -54,6 +54,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatToolbarModule,
     MatButtonModule
   ],
+  exports: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

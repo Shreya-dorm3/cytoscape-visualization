@@ -1,1 +1,70 @@
-<p>navbar works!</p>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over" [(opened)]="isExpanded" [fixedInViewport]="true">
+
+        <section class="h-100">
+            <div class="overflow-auto">
+                <mat-accordion *ngIf="menuList.length !== 0;else noMenuFound">
+                    <ng-container *ngFor="let menu of menuList">
+                        <div class="panel-alternative" [routerLink]="menu.action"
+                            routerLinkActive="panel-alternative-active" [routerLinkActiveOptions]="{exact: true}">
+                            <div class="inner-body">
+                                {{menu.name}}
+                            </div>
+                        </div>
+                    </ng-container>
+                </mat-accordion>
+                <ng-template #noMenuFound>
+                    <div class="text-center">
+                        no menu found...
+                    </div>
+                </ng-template>
+            </div>
+        </section>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="left-content d-flex align-items-center">
+                    <mat-icon *ngIf="!sidenav.opened" (click)="sidenav.toggle()" matTooltip="Open menu"
+                        matTooltipShowDelay="1000" aria-label="open menu">
+                        menu</mat-icon>
+                    <mat-icon *ngIf="sidenav.opened" (click)="sidenav.toggle()"
+                        style="vertical-align: bottom;cursor: pointer;" matTooltip="Close menu"
+                        matTooltipShowDelay="1000">arrow_back
+                    </mat-icon>
+                    <ng-section class="d-none d-sm-flex align-items-baseline mt-2">
+                        <span class="product-title">
+                            Home
+                        </span>
+                        <span class="text-muted product-subtext">
+                            Documentation
+                        </span>
+                    </ng-section>
+                </div>
+                <div class="right-content d-flex align-items-center justify-content-end" [style.width]="'14em'">
+                    <span class="align-self-end d-none d-sm-block text-center" [style.width]="'3em'">
+                        <ng-section>
+                            <mat-icon matTooltip="Switch to light mode" matTooltipShowDelay="1000">
+                                nightlight_round</mat-icon>
+                        </ng-section>
+                    </span>
+                    <span class="mx-2 align-self-end">
+                        <img class="align-top svg-small" matTooltip="Open notifications" matTooltipShowDelay="1000"
+                            src="./assets/notifications.png" alt="notifications">
+                    </span>
+                    <span class="mx-2 align-self-end">
+                        <img class="align-top svg-small" matTooltip="Open notifications" matTooltipShowDelay="1000"
+                            src="../assets/github.png" alt="notifications">
+                    </span>
+                    <span class="mx-2 align-self-end">
+                        <img class="align-top svg-small" matTooltip="Open notifications" matTooltipShowDelay="1000"
+                            src="./assets/contact.png" alt="notifications">
+                    </span>
+                </div>
+            </div>
+        </mat-toolbar>
+        <ng-content></ng-content>
+        <footer class="footer text-center">Cytoscape Project</footer>
+    </mat-sidenav-content>
+</mat-sidenav-container>

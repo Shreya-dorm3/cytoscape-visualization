@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatAccordion } from '@angular/material/expansion';
+export interface MenuData {
+  name: string;
+  action: string;
+}
 
 @Component({
   selector: 'app-navbar',
@@ -6,6 +11,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent implements OnInit {
+
+  @ViewChild(MatAccordion) accordion: MatAccordion = new MatAccordion;
+  isExpanded: boolean = false;
+  menuList: MenuData[] = [{name: 'Graph', action: '/graphing'}, {name: 'APIs', action: '/api'}, {name: 'About', action: '/about'}];
+  userName: string = '';
 
   constructor() { }
 
