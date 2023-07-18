@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion: MatAccordion = new MatAccordion;
   isExpanded: boolean = false;
-  menuList: MenuData[] = [{name: 'Graph', action: '/graphing'}, {name: 'APIs', action: '/api'}, {name: 'About', action: '/about'}];
+  menuList: MenuData[] = [{name: 'Graph', action: '/graph/testing'}, {name: 'APIs', action: '/api'}, {name: 'About', action: '/about'}];
   userName: string = '';
 
   constructor() { }
