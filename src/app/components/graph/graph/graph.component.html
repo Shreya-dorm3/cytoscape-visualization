@@ -14,12 +14,8 @@
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="accordionItem accordionItemCollapsed"
-                                            *ngFor="let data of blocks.blockData" cdkDrag
-                                            [cdkDragFreeDragPosition]="dragPosition" data-placement="right"
-                                            [attr.title]="data.title" (mouseup)="createNode($event, data)"
-                                            (touched)="createNode($event, data)" (cdkDragDropped)="createNode($event, data)"
-                                            cdkDropListConnectedTo="cy">
-                                            <p class="container-outlined h-100 w-100 my-1">
+                                            *ngFor="let data of blocks.blockData" >
+                                            <p class="container-outlined h-100 w-100 my-1" (mouseup)="addNode($event, data)">
                                                 {{data.title}}
                                             </p>
                                         </div>

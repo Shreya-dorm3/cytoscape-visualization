@@ -1,7 +1,7 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="over" [(opened)]="isExpanded" [fixedInViewport]="true">
 
-        <section class="h-100">
+        <section>
             <div class="overflow-auto">
                 <mat-accordion *ngIf="menuList.length !== 0;else noMenuFound">
                     <ng-container *ngFor="let menu of menuList">

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GraphRoutingModule } from './graph-routing.module';
-import { TestingComponent } from './testing/testing.component';
+import { AddNodeDialog, TestingComponent } from './testing/testing.component';
 import { SharedModule } from '../shared/shared.module';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -22,11 +22,15 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTreeModule } from '@angular/material/tree';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AddNewNodeDialog, GraphComponent } from './graph/graph.component';
 
 
 @NgModule({
   declarations: [
-    TestingComponent
+    TestingComponent,
+    AddNodeDialog,
+    GraphComponent,
+    AddNewNodeDialog
   ],
   imports: [
     CommonModule,
@@ -52,6 +56,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatTreeModule,
     MatExpansionModule,
 
-  ]
+  ],
+  providers: [TestingComponent, GraphComponent]
 })
 export class GraphModule { }
