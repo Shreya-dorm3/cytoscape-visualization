@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
 import * as cytoscape from 'cytoscape';
-import { EdgeData, NodeData } from '../model';
-import { AvailableBlocks, BlockData } from '../testing/testing.component';
+import * as cxtmenu from 'cytoscape-cxtmenu';
+import { AvailableBlocks, EdgeData, NodeData, NodeNew, NodeStyle } from '../model';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 var that: any;
@@ -29,6 +29,17 @@ export class GraphComponent implements OnInit {
           "id": 1,
           "x": 100,
           "y": 200
+        },
+        "style": {
+          'background-color': '#0C579C',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'color': "white",
+          'height': '30px',
+          'width': '30px',
+          'font-size': '5px',
+          'border-width': "0.01px",
+          'border-color': "black"
         }
       },
       {
@@ -36,14 +47,25 @@ export class GraphComponent implements OnInit {
         "data": {
           "id": "node_2",
           "type": "rectangle",
-          "color": "red",
-          "width": 50,
+          "color": "#B2002B",
+          "width": 35,
           "height": 40
         },
         "position": {
           "id": 2,
           "x": 300,
           "y": 150
+        },
+        "style": {
+          'background-color': '#B2002B',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'color': "white",
+          'height': '35px',
+          'width': '40px',
+          'font-size': '5px',
+          'border-width': "0.01px",
+          'border-color': "black"
         }
       },
       {
@@ -52,13 +74,24 @@ export class GraphComponent implements OnInit {
           "id": "node_3",
           "type": "triangle",
           "color": "green",
-          "width": 25,
-          "height": 25
+          "width": 30,
+          "height": 30
         },
         "position": {
           "id": 3,
           "x": 50,
           "y": 100
+        },
+        "style": {
+          'background-color': '#065BAA',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'color': "white",
+          'height': '30px',
+          'width': '35px',
+          'font-size': '5px',
+          'border-width': "0.01px",
+          'border-color': "black",
         }
       },
       {
@@ -74,6 +107,17 @@ export class GraphComponent implements OnInit {
           "id": 4,
           "x": 200,
           "y": 300
+        },
+        "style": {
+          'background-color': '#D3AB05',
+          'text-valign': 'center',
+          'text-halign': 'center',
+          'color': "white",
+          'height': '35px',
+          'width': '35px',
+          'font-size': '5px',
+          'border-width': "0.01px",
+          'border-color': "black"
         }
       }
     ], edges: [
@@ -83,6 +127,9 @@ export class GraphComponent implements OnInit {
           "id": "edge_1",
           "source": "node_1",
           "target": "node_2"
+        },
+        "style": {
+          "width": "0.7px"
         }
       },
       {
@@ -91,6 +138,9 @@ export class GraphComponent implements OnInit {
           "id": "edge_2",
           "source": "node_2",
           "target": "node_3"
+        },
+        "style": {
+          "width": "0.7px"
         }
       },
       {
@@ -99,6 +149,9 @@ export class GraphComponent implements OnInit {
           "id": "edge_3",
           "source": "node_3",
           "target": "node_4"
+        },
+        "style": {
+          "width": "0.7px"
         }
       }
     ]
@@ -114,7 +167,7 @@ export class GraphComponent implements OnInit {
         'color': "black",
         'height': '10px',
         'width': '10px',
-        'font-size': '0.5px',
+        'font-size': '5px',
         'border-width': "0.01px",
         'border-color': "black"
       },
@@ -123,7 +176,7 @@ export class GraphComponent implements OnInit {
       selector: 'edge',
       css: {
         'curve-style': 'bezier',
-        width: '0.1px',
+        "width": '0.4px',
         'target-arrow-shape': 'triangle',
         'arrow-scale': '0.03px',
         'opacity': 0.3,
@@ -139,19 +192,85 @@ export class GraphComponent implements OnInit {
       "name": "API",
       "blockData": [
         {
-          "id": 1,
-          "title": "Task 1",
-          "description": "This is description of tasks 1"
+          "nodeIndex": 1,
+          "data": {
+            "id": "node_1",
+            "type": "circle",
+            "color": "blue",
+            "width": 30,
+            "height": 30
+          },
+          "position": {
+            "id": 1,
+            "x": 100,
+            "y": 200
+          },
+          "style": {
+            "backgroundColor": "#0C579C",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "30px",
+            "width": "30px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "circle"
+          }
         },
         {
-          "id": 2,
-          "title": "Task 2",
-          "description": "'This is description of tasks 2'"
+          "nodeIndex": 2,
+          "data": {
+            "id": "node_2",
+            "type": "rectangle",
+            "color": "#B2002B",
+            "width": 35,
+            "height": 40
+          },
+          "position": {
+            "id": 2,
+            "x": 300,
+            "y": 150
+          },
+          "style": {
+            "backgroundColor": "#B2002B",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "35px",
+            "width": "40px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "rectangle"
+          }
         },
         {
-          "id": 3,
-          "title": "Task 3",
-          "description": "This is description of tasks 3"
+          "nodeIndex": 3,
+          "data": {
+            "id": "node_3",
+            "type": "triangle",
+            "color": "green",
+            "width": 30,
+            "height": 30
+          },
+          "position": {
+            "id": 3,
+            "x": 50,
+            "y": 100
+          },
+          "style": {
+            "backgroundColor": "#065BAA",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "30px",
+            "width": "35px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "triangle"
+          }
         }
       ]
     },
@@ -160,19 +279,112 @@ export class GraphComponent implements OnInit {
       "name": "SQL Operations",
       "blockData": [
         {
-          "id": 1,
-          "title": "Task 1",
-          "description": "This is description of tasks 1"
+          "nodeIndex": 4,
+          "data": {
+            "id": "node_4",
+            "type": "square",
+            "color": "yellow",
+            "width": 35,
+            "height": 35
+          },
+          "position": {
+            "id": 4,
+            "x": 200,
+            "y": 300
+          },
+          "style": {
+            "backgroundColor": "#D3AB05",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "35px",
+            "width": "35px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "square"
+          }
         },
         {
-          "id": 2,
-          "title": "Task 2",
-          "description": "'This is description of tasks 2'"
+          "nodeIndex": 5,
+          "data": {
+            "id": "node_5",
+            "type": "circle",
+            "color": "red",
+            "width": 25,
+            "height": 25
+          },
+          "position": {
+            "id": 5,
+            "x": 50,
+            "y": 250
+          },
+          "style": {
+            "backgroundColor": "#FF5733",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "25px",
+            "width": "25px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "circle"
+          }
         },
         {
-          "id": 3,
-          "title": "Task 3",
-          "description": "This is description of tasks 3"
+          "nodeIndex": 6,
+          "data": {
+            "id": "node_6",
+            "type": "rectangle",
+            "color": "#4CAF50",
+            "width": 40,
+            "height": 30
+          },
+          "position": {
+            "id": 6,
+            "x": 350,
+            "y": 100
+          },
+          "style": {
+            "backgroundColor": "#4CAF50",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "30px",
+            "width": "40px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "rectangle"
+          }
+        },
+        {
+          "nodeIndex": 7,
+          "data": {
+            "id": "node_7",
+            "type": "triangle",
+            "color": "#800080",
+            "width": 30,
+            "height": 30
+          },
+          "position": {
+            "id": 7,
+            "x": 150,
+            "y": 400
+          },
+          "style": {
+            "backgroundColor": "#800080",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "30px",
+            "width": "30px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "triangle"
+          }
         }
       ]
     },
@@ -181,19 +393,226 @@ export class GraphComponent implements OnInit {
       "name": "Other Operations",
       "blockData": [
         {
-          "id": 1,
-          "title": "Task 1",
-          "description": "This is description of tasks 1"
+          "nodeIndex": 8,
+          "data": {
+            "id": "node_8",
+            "type": "circle",
+            "color": "orange",
+            "width": 25,
+            "height": 25
+          },
+          "position": {
+            "id": 8,
+            "x": 400,
+            "y": 300
+          },
+          "style": {
+            "backgroundColor": "#FFA500",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "25px",
+            "width": "25px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "circle"
+          }
         },
         {
-          "id": 2,
-          "title": "Task 2",
-          "description": "'This is description of tasks 2'"
+          "nodeIndex": 9,
+          "data": {
+            "id": "node_9",
+            "type": "rectangle",
+            "color": "#00FFFF",
+            "width": 30,
+            "height": 40
+          },
+          "position": {
+            "id": 9,
+            "x": 100,
+            "y": 350
+          },
+          "style": {
+            "backgroundColor": "#00FFFF",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "40px",
+            "width": "30px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "rectangle"
+          }
         },
         {
-          "id": 3,
-          "title": "Task 3",
-          "description": "This is description of tasks 3"
+          "nodeIndex": 10,
+          "data": {
+            "id": "node_10",
+            "type": "triangle",
+            "color": "#FF1493",
+            "width": 30,
+            "height": 30
+          },
+          "position": {
+            "id": 10,
+            "x": 250,
+            "y": 200
+          },
+          "style": {
+            "backgroundColor": "#FF1493",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "30px",
+            "width": "30px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "triangle"
+          }
+        },
+        {
+          "nodeIndex": 11,
+          "data": {
+            "id": "node_11",
+            "type": "square",
+            "color": "#800000",
+            "width": 35,
+            "height": 35
+          },
+          "position": {
+            "id": 11,
+            "x": 400,
+            "y": 100
+          },
+          "style": {
+            "backgroundColor": "#800000",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "35px",
+            "width": "35px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "square"
+          }
+        }
+      ]
+    },
+    {
+      "type": "interface",
+      "name": "Interface Operations",
+      "blockData": [
+        {
+          "nodeIndex": 12,
+          "data": {
+            "id": "node_12",
+            "type": "circle",
+            "color": "#008000",
+            "width": 25,
+            "height": 25
+          },
+          "position": {
+            "id": 12,
+            "x": 200,
+            "y": 50
+          },
+          "style": {
+            "backgroundColor": "#008000",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "25px",
+            "width": "25px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "circle"
+          }
+        },
+        {
+          "nodeIndex": 13,
+          "data": {
+            "id": "node_13",
+            "type": "rectangle",
+            "color": "#FF4500",
+            "width": 30,
+            "height": 40
+          },
+          "position": {
+            "id": 13,
+            "x": 250,
+            "y": 350
+          },
+          "style": {
+            "backgroundColor": "#FF4500",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "40px",
+            "width": "30px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "rectangle"
+          }
+        },
+        {
+          "nodeIndex": 14,
+          "data": {
+            "id": "node_14",
+            "type": "triangle",
+            "color": "#FF8C00",
+            "width": 30,
+            "height": 30
+          },
+          "position": {
+            "id": 14,
+            "x": 150,
+            "y": 200
+          },
+          "style": {
+            "backgroundColor": "#FF8C00",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "30px",
+            "width": "30px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "triangle"
+          }
+        },
+        {
+          "nodeIndex": 15,
+          "data": {
+            "id": "node_15",
+            "type": "square",
+            "color": "#9370DB",
+            "width": 35,
+            "height": 35
+          },
+          "position": {
+            "id": 15,
+            "x": 300,
+            "y": 400
+          },
+          "style": {
+            "backgroundColor": "#9370DB",
+            "textValign": "center",
+            "textHalign": "center",
+            "color": "white",
+            "height": "35px",
+            "width": "35px",
+            "fontSize": "5px",
+            "borderWidth": "0.01px",
+            "borderColor": "black",
+            "shape": "square"
+          }
         }
       ]
     }
@@ -247,12 +666,12 @@ export class GraphComponent implements OnInit {
       console.log("here", e);
       if (e.target != that.cy) {
         source = e.target;
-        that.cy.nodes().ungrabify();
+        // that.cy.nodes().ungrabify();
       }
     });
   }
 
-  addNode(event: any, item: BlockData) {
+  addNode(event: any, item: NodeData) {
     const dialogRef = this.dialog.open(AddNewNodeDialog, { data: item });
     dialogRef.afterClosed().subscribe(res => {
     })
@@ -282,6 +701,7 @@ export class AddNewNodeDialog {
   name: string = '';
   label: string = '';
   id!: number;
+  styleNode: NodeStyle = { backgroundColor: 'pink', borderColor: 'black', borderWidth: '0.1px', color: 'white', fontSize: '1px', height: '30px', width: '30px', shape: 'square', textHalign: 'center', textValign: 'center' };
 
   constructor(public dialogRef: MatDialogRef<AddNewNodeDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private graph: GraphComponent) {
     console.log("here in dialog", data)
@@ -314,7 +734,7 @@ export class AddNewNodeDialog {
     //     shapeType: "round-rectangle"
     //   },
     // };
-    var nodeNew: any = {
+    var nodeNew: NodeNew = {
       nodeIndex: counter + 1,
       position: {
         id: counter + 1,
@@ -328,22 +748,27 @@ export class AddNewNodeDialog {
         id: this.name,
         type: 'rectangle'
       },
-      style: {
-        'background-color': 'pink',
-        'text-valign': 'center',
-        'text-halign': 'center',
-        'color': "black",
-        'height': '20px',
-        'width': '20px',
-        'font-size': '6px',
-        'border-width': "0.01px",
-        'border-color': "black",
-        "shape": "square"
-      }
+      style: this.styleNode
     }
     this.graph.temp.nodes.push(nodeNew);
     this.graph.createNode(nodeNew);
     // this.graph.renderNodes();
     this.dialogRef.close();
   }
+
+  renderStyleForAdd(nodeStyle: NodeStyle) {
+    var styleContent = {
+      'background-color': `${nodeStyle.backgroundColor}`,
+      'text-valign': `${nodeStyle.textValign}`,
+      'text-halign': `${nodeStyle.textHalign}`,
+      'color': `${nodeStyle.color}`,
+      'height': `${nodeStyle.height}`,
+      'width': `${nodeStyle.width}`,
+      'font-size': `${nodeStyle.fontSize}`,
+      'border-width': `${nodeStyle.borderWidth}`,
+      'border-color': `${nodeStyle.borderColor}`
+    }
+    return styleContent;
+  }
+
 }

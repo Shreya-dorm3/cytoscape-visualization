@@ -16,11 +16,11 @@
                                         <div class="accordionItem accordionItemCollapsed"
                                             *ngFor="let data of blocks.blockData" cdkDrag
                                             [cdkDragFreeDragPosition]="dragPosition" data-placement="right"
-                                            [attr.title]="data.title" (mouseup)="createNode($event, data)"
+                                            [attr.title]="data.nodeIndex" (mouseup)="createNode($event, data)"
                                             (touched)="createNode($event, data)" (cdkDragDropped)="createNode($event, data)"
                                             cdkDropListConnectedTo="cy">
                                             <p class="container-outlined h-100 w-100 my-1">
-                                                {{data.title}}
+                                                {{data.data.id}}
                                             </p>
                                         </div>
                                     </mat-expansion-panel>

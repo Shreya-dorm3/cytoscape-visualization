@@ -2,19 +2,8 @@ import { AfterViewChecked, Component, ElementRef, Inject, OnInit, Renderer2, Vie
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatAccordion } from '@angular/material/expansion';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { AvailableBlocks } from '../model';
 // import * as cytoscape from 'cytoscape';
-
-export interface AvailableBlocks {
-  type: string;
-  name: string;
-  blockData: BlockData[];
-}
-
-export interface BlockData {
-  id: number;
-  title: string;
-  description: string;
-}
 
 /*global define: false */
 
@@ -52,69 +41,6 @@ export class TestingComponent implements OnInit, AfterViewChecked {
   public cy = cytoscape();
   wheelSensitivity: any;
   availableBlocks: AvailableBlocks[] = [
-    {
-      "type": "api",
-      "name": "API",
-      "blockData": [
-        {
-          "id": 1,
-          "title": "Task 1",
-          "description": "This is description of tasks 1"
-        },
-        {
-          "id": 2,
-          "title": "Task 2",
-          "description": "'This is description of tasks 2'"
-        },
-        {
-          "id": 3,
-          "title": "Task 3",
-          "description": "This is description of tasks 3"
-        }
-      ]
-    },
-    {
-      "type": "sql",
-      "name": "SQL Operations",
-      "blockData": [
-        {
-          "id": 1,
-          "title": "Task 1",
-          "description": "This is description of tasks 1"
-        },
-        {
-          "id": 2,
-          "title": "Task 2",
-          "description": "'This is description of tasks 2'"
-        },
-        {
-          "id": 3,
-          "title": "Task 3",
-          "description": "This is description of tasks 3"
-        }
-      ]
-    },
-    {
-      "type": "other",
-      "name": "Other Operations",
-      "blockData": [
-        {
-          "id": 1,
-          "title": "Task 1",
-          "description": "This is description of tasks 1"
-        },
-        {
-          "id": 2,
-          "title": "Task 2",
-          "description": "'This is description of tasks 2'"
-        },
-        {
-          "id": 3,
-          "title": "Task 3",
-          "description": "This is description of tasks 3"
-        }
-      ]
-    }
   ];
   elementData: { nodes: any[]; edges: any[] } = {
     nodes: [
@@ -362,7 +288,7 @@ export class TestingComponent implements OnInit, AfterViewChecked {
   # When the node/ block is dragged from the side menu and dropped on the canvas, this function is called.
   DRAG POSITION is calculated from cdkDragFreeDragPosition
   */
-  createNode(event: any, item: BlockData) {
+  createNode(event: any, item: any) {
     console.log("mouse ", event)
     var container = (<HTMLInputElement>document.getElementById("cy"))
     var rect = container.getBoundingClientRect();

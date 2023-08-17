@@ -6,7 +6,7 @@
                     <div class="h-100 w-100">
                         <div class="block-container container-outlined h-100">
                             <ng-container *ngFor="let blocks of availableBlocks">
-                                <mat-accordion multi class="accordion">
+                                <mat-accordion class="accordion">
                                     <mat-expansion-panel>
                                         <mat-expansion-panel-header class="accordionTitle">
                                             <mat-panel-title>
@@ -16,7 +16,7 @@
                                         <div class="accordionItem accordionItemCollapsed"
                                             *ngFor="let data of blocks.blockData" >
                                             <p class="container-outlined h-100 w-100 my-1" (mouseup)="addNode($event, data)">
-                                                {{data.title}}
+                                                {{data.data.id}}
                                             </p>
                                         </div>
                                     </mat-expansion-panel>
