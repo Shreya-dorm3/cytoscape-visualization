@@ -8,6 +8,12 @@ const routes: Routes = [
     data: {
       title: 'Graph'
     }
+  },  {
+    path: 'mapping',
+    loadChildren: () => import('./components/mapping/mapping.module').then(m => m.MappingModule),
+    data: {
+      title: 'Mapping'
+    }
   },
 ];
 
