@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MappingRoutingModule } from './mapping-routing.module';
-import { CanvasComponent } from './canvas/canvas.component';
+import { CanvasComponent, ConfirmSaveDialogueComponent, CreateNodeDialogueComponent, ShowMapDialogueComponent, UploadMapDialogueComponent } from './canvas/canvas.component';
 import { SharedModule } from '../shared/shared.module';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -26,7 +26,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
-    CanvasComponent
+    CanvasComponent,
+    CreateNodeDialogueComponent,
+    UploadMapDialogueComponent,
+    ShowMapDialogueComponent,
+    ConfirmSaveDialogueComponent
   ],
   imports: [
     CommonModule,

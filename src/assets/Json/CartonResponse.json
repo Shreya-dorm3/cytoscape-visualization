@@ -1,0 +1,122 @@
+[
+  {
+    "backgroundColor": "rgba(137,207,240,0.3)",
+    "battery": 85.15000000000084,
+    "color": "#065baa",
+    "current_task": "IntermediateLocation_5",
+    "destination_location": "",
+    "discription": "The robot is in Idle state",
+    "id": 0,
+    "imageUrl": "http://35.192.175.65/053.png",
+    "isConnected": true,
+    "location_index": 0,
+    "number": 1,
+    "path": [
+      {
+        "pose": {
+          "position": {
+            "x": -0.0931478962302208,
+            "y": 55.08878707885742
+          }
+        }
+      }
+    ],
+    "pose": {
+      "orientation": {
+        "w": 0.14154124386410344,
+        "x": 0,
+        "y": 0,
+        "z": 0.9899323594495749
+      },
+      "position": {
+        "x": -0.0865587592124939,
+        "y": 55.088706970214844,
+        "z": 0
+      }
+    },
+    "robotName": "10.113.18.173",
+    "robot_errors": {
+      "EMERGENCY STOP": [
+        {
+          "description": "Robot ESTOP active",
+          "fix": "Release the ESTOP and press confirm button",
+          "name": "EMERGENCY STOP"
+        }
+      ],
+      "LIDAR_ERROR": [
+        {
+          "description": "Obstacle present in robot path",
+          "fix": "Remove any obstacle from robot safety zone",
+          "name": "LIDAR ERROR"
+        }
+      ]
+    },
+    "robot_mode": "AUTO",
+    "robot_state": "IDLE STATE",
+    "source_location": "",
+    "source_state": 0,
+    "type": "amr",
+    "view_name": "AMR1",
+    "workHours": "24 Hours"
+  },
+  {
+    "backgroundColor": "rgba(137,207,240,0.3)",
+    "battery": 85.15000000000084,
+    "color": "#065baa",
+    "current_task": "IntermediateLocation_1",
+    "destination_location": "",
+    "discription": "The robot is in Idle state",
+    "id": 1,
+    "imageUrl": "http://35.192.175.65/053.png",
+    "isConnected": true,
+    "location_index": 0,
+    "number": 2,
+    "path": [
+      {
+        "pose": {
+          "position": {
+            "x": 3.0102949142456055,
+            "y": 53.14250183105469
+          }
+        }
+      }
+    ],
+    "pose": {
+      "orientation": {
+        "w": 0.9967436605289809,
+        "x": 0,
+        "y": 0,
+        "z": -0.08063544627077852
+      },
+      "position": {
+        "x": 3.011981725692749,
+        "y": 53.18227767944336,
+        "z": 0
+      }
+    },
+    "robotName": "10.113.18.176",
+    "robot_errors": {
+      "EMERGENCY STOP": [
+        {
+          "description": "Robot ESTOP active",
+          "fix": "Release the ESTOP and press confirm button",
+          "name": "EMERGENCY STOP"
+        }
+      ],
+      "LIDAR_ERROR": [
+        {
+          "description": "Obstacle present in robot path",
+          "fix": "Remove any obstacle from robot safety zone",
+          "name": "LIDAR ERROR"
+        }
+      ]
+    },
+    "robot_mode": "AUTO",
+    "robot_state": "IDLE STATE",
+    "source_location": "",
+    "source_state": 0,
+    "type": "amr",
+    "view_name": "AMR2",
+    "workHours": "24 Hours"
+  }
+]

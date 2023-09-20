@@ -1,0 +1,19 @@
+<h1>Node Name</h1>
+<mat-form-field class="example-form-field">
+    <mat-label>Node Name wcs_ID</mat-label>
+    <input matInput type="text" [(ngModel)]="value" />
+    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <i class="fa fa-times"></i>
+    </button>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+    <mat-label>Node Type</mat-label>
+    <mat-select [(ngModel)]="FavoriteNode" name="node">
+        <mat-option *ngFor="let type of types" [value]="type">
+            {{type.viewName}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<button mat-button (click)="submit()" class="CreateNodeButton">submit</button>
+<button mat-button (click)="cancel()" class="CreateNodeButton">close</button>
