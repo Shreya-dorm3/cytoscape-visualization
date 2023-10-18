@@ -186,6 +186,72 @@ export class GraphComponent implements OnInit {
       },
     },
   ];
+  // @ts-ignore
+  public style: any = cytoscape.stylesheet()
+    .selector(":selected")
+    .css({
+      "border-width": 0.7,
+      "border-color": "#000",
+    })
+    .selector("edge")
+    .css({
+      "curve-style": "bezier",
+      opacity: 0.9,
+      width: 1,
+      "target-arrow-shape": "vee",
+      "line-color": "data(colorCode)",
+      "source-arrow-color": "data(colorCode)",
+      "target-arrow-color": "data(colorCode)",
+      "arrow-scale": "1",
+      "z-index": 5,
+      "z-compound-depth": "top",
+    })
+
+    .selector("edge[label]")
+    .css({
+      "label": "data(label)",
+      "text-rotation": "autorotate",
+      "text-margin-x": "0px",
+      "text-margin-y": "-5px",
+      "font-size": "8px"
+    })
+    .selector(":selected")
+    .css({
+      "line-style": "dotted",
+      "target-arrow-shape": "diamond",
+    })
+    .selector("edge.questionable")
+    .css({
+      "line-style": "dotted",
+      "target-arrow-shape": "diamond",
+    })
+    .selector(".faded")
+    .css({
+      opacity: 1,
+      "text-opacity": 0,
+    })
+    .selector(".customSelected")
+    .css({
+      "background-size": "10px 10px",
+      "background-image": "./assets/images/download.jpeg",
+
+      // color: "white",
+    })
+    .selector(".currentBlock")
+    .css({
+      "background-opacity": ".5",
+      "background-color": "#61bffc",
+      "transition-property": "background-color, line-color, target-arrow-color",
+      "transition-duration": "0.5s",
+    })
+    .selector(".executedEdge")
+    .css({
+      "background-color": "#61bffc",
+      "line-color": "#61bffc",
+      "target-arrow-color": "#61bffc",
+      "transition-property": "background-color, line-color, target-arrow-color",
+      "transition-duration": "0.5s",
+    });
   availableBlocks: AvailableBlocks[] = [
     {
       "type": "api",
@@ -618,7 +684,8 @@ export class GraphComponent implements OnInit {
     }
   ];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.renderNodes();
@@ -664,26 +731,24 @@ export class GraphComponent implements OnInit {
 
     // @ts-ignore
     this.cy.on("taphold", "node", function (e) {
-      console.log("here", e);
       if (e.target != that.cy) {
-        source = e.target;
+        source = e.target.data().id;
         that.cy.nodes().ungrabify();
       }
     });
 
     // @ts-ignore
     this.cy.on("tapend", function (e) {
-      console.log("tapend called", e.target.data());
+      // console.log("tapend called", e.target.data());
+      // console.log(that.cy.nodes())
       if (e.target.data().id) {
         that.lastNodeCreatedId = e.target.data().id;
       }
       if (e.target != that.cy && source) {
         destination = e.target.data().id;
-        // console.log(source.data());
-
-        that.createEdgeCallback(source.data().id, destination);
+        that.createEdgeCallback(source, destination);
       }
-      if (source) source.removeClass("customSelected");
+      if (source) that.cy.$("#" + source).removeClass("customSelected");
       that.cy.nodes().grabify();
       source = null;
     });
@@ -708,84 +773,81 @@ export class GraphComponent implements OnInit {
 
   // @ts-ignore
   createEdgeCallback(a, b) {
-    console.log("nodes passed", a, b);
     console.log("target details", that.cy.$("#" + b).data());
     console.log("source details", that.cy.$("#" + a).data());
+    var obj;
+    var name = that.cy.$("#" + b).data().name;
 
-    if (1) {
-      var obj;
-
-      var name = that.cy.$("#" + b).data().name;
-
-      if (name === "start") {
-        //can't create edge on the starting node
-        return;
-      }
-
-      // @ts-ignore
-      var totalCases: any;
-      totalCases = JSON.parse(JSON.stringify(that.cy.$("#" + a).data().children));
-
-      // @ts-ignore
-      this.cy.$("#" + a)[0]._private.edges.forEach((element) => {
-        let iter = element[0]._private.data;
-        // console.log(iter);
-        for (let i = 0; i < totalCases.length; i++) {
-          if (totalCases[i].name === iter.type && iter.source === a) {
-            totalCases.splice(i--, 1);
-          }
-        }
-        // console.log(total);
-      });
-
-      if (totalCases.length === 1) {
-        obj = {
-          data: {
-            source: a,
-            target: b,
-            colorCode: totalCases[0].color,
-            strength: 1,
-            type: totalCases[0].name,
-            label: totalCases[0].name,
-          },
-          classes: 'autorotate',
-        };
-        this.cy.add([obj]);
-      }
-
-      else {
-        const dialogRef = that.dialog.open(EdgeType, {
-          width: "auto",
-          disableClose: true,
-          data: {
-            id: a,
-            usedTypes: [],
-            totalTypes: totalCases,
-          },
-        });
-
-        // @ts-ignore
-        dialogRef.afterClosed().subscribe(result => {
-          if (result === undefined)
-            return;
-          console.log(result);
-
-          obj = {
-            data: {
-              source: a,
-              target: b,
-              colorCode: result.color,
-              strength: 1,
-              type: result.name,
-              label: result.name,
-            },
-            classes: 'autorotate',
-          };
-
-          this.cy.add([obj]);
-        });
-      }
+    if (name === "start") {
+      //can't create edge on the starting node
+      return;
     }
+
+    // @ts-ignore
+    var totalCases: any;
+    // totalCases = JSON.parse(JSON.stringify(that.cy.$("#" + a).data().children));
+
+    // @ts-ignore
+    this.cy.$("#" + a)[0]._private.edges.forEach((element) => {
+      let iter = element[0]._private.data;
+
+      /**
+       * For now no defined children, so skipping the cases for having children
+       */
+      // for (let i = 0; i < totalCases.length; i++) {
+      //   if (totalCases[i].name === iter.type && iter.source === a) {
+      //     totalCases.splice(i--, 1);
+      //   }
+      // }
+    });
+
+    // if (totalCases.length === 1) {
+    obj = {
+      data: {
+        source: a,
+        target: b,
+        // colorCode: totalCases[0].color,
+        strength: 1,
+        type: 'edge',
+        label: 'Edge',
+      },
+      classes: 'autorotate',
+    };
+    this.cy.add([obj]);
+    // }
+
+    // else {
+    //   const dialogRef = that.dialog.open(EdgeType, {
+    //     width: "auto",
+    //     disableClose: true,
+    //     data: {
+    //       id: a,
+    //       usedTypes: [],
+    //       totalTypes: totalCases,
+    //     },
+    //   });
+
+    //   // @ts-ignore
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     if (result === undefined)
+    //       return;
+    //     console.log(result);
+
+    //     obj = {
+    //       data: {
+    //         source: a,
+    //         target: b,
+    //         colorCode: result.color,
+    //         strength: 1,
+    //         type: result.name,
+    //         label: result.name,
+    //       },
+    //       classes: 'autorotate',
+    //     };
+
+    //     this.cy.add([obj]);
+    //   });
+    // }
   }
 
 
