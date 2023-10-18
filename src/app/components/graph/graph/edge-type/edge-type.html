@@ -1,0 +1,20 @@
+<div class="h-100">
+    <div class="row discrepancy-header g-0">
+        <span [style.width]="'95%'" class="text-center ">
+            <h2 class="m-1">Add Node</h2>
+        </span>
+        <span [style.width]="'5%'">
+            <mat-icon type="button" class="m-1" (click)="dialogRef.close()">close</mat-icon>
+        </span>
+    </div>
+    <div class="p-4">
+        <mat-form-field appearance="fill">
+            <mat-label>type</mat-label>
+            <mat-select [(ngModel)]="favoriteType">
+                <ng-container *ngFor="let type of types">
+                    <mat-option [value]="type">{{type.name}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>

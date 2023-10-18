@@ -643,7 +643,8 @@ export class GraphComponent implements OnInit {
 
   renderGraph() {
     that = this;
-    var source;
+    var source: any;
+    var destination;
     this.cy = cytoscape({
       container: document.getElementById('cy'),
       boxSelectionEnabled: false,
@@ -666,8 +667,25 @@ export class GraphComponent implements OnInit {
       console.log("here", e);
       if (e.target != that.cy) {
         source = e.target;
-        // that.cy.nodes().ungrabify();
+        that.cy.nodes().ungrabify();
       }
+    });
+
+    // @ts-ignore
+    this.cy.on("tapend", function (e) {
+      console.log("tapend called", e.target.data());
+      if (e.target.data().id) {
+        that.lastNodeCreatedId = e.target.data().id;
+      }
+      if (e.target != that.cy && source) {
+        destination = e.target.data().id;
+        // console.log(source.data());
+
+        that.createEdgeCallback(source.data().id, destination);
+      }
+      if (source) source.removeClass("customSelected");
+      that.cy.nodes().grabify();
+      source = null;
     });
   }
 
@@ -686,6 +704,88 @@ export class GraphComponent implements OnInit {
         style: node.style
       },
     ]);
+  }
+
+  // @ts-ignore
+  createEdgeCallback(a, b) {
+    console.log("nodes passed", a, b);
+    console.log("target details", that.cy.$("#" + b).data());
+    console.log("source details", that.cy.$("#" + a).data());
+
+    if (1) {
+      var obj;
+
+      var name = that.cy.$("#" + b).data().name;
+
+      if (name === "start") {
+        //can't create edge on the starting node
+        return;
+      }
+
+      // @ts-ignore
+      var totalCases: any;
+      totalCases = JSON.parse(JSON.stringify(that.cy.$("#" + a).data().children));
+
+      // @ts-ignore
+      this.cy.$("#" + a)[0]._private.edges.forEach((element) => {
+        let iter = element[0]._private.data;
+        // console.log(iter);
+        for (let i = 0; i < totalCases.length; i++) {
+          if (totalCases[i].name === iter.type && iter.source === a) {
+            totalCases.splice(i--, 1);
+          }
+        }
+        // console.log(total);
+      });
+
+      if (totalCases.length === 1) {
+        obj = {
+          data: {
+            source: a,
+            target: b,
+            colorCode: totalCases[0].color,
+            strength: 1,
+            type: totalCases[0].name,
+            label: totalCases[0].name,
+          },
+          classes: 'autorotate',
+        };
+        this.cy.add([obj]);
+      }
+
+      else {
+        const dialogRef = that.dialog.open(EdgeType, {
+          width: "auto",
+          disableClose: true,
+          data: {
+            id: a,
+            usedTypes: [],
+            totalTypes: totalCases,
+          },
+        });
+
+        // @ts-ignore
+        dialogRef.afterClosed().subscribe(result => {
+          if (result === undefined)
+            return;
+          console.log(result);
+
+          obj = {
+            data: {
+              source: a,
+              target: b,
+              colorCode: result.color,
+              strength: 1,
+              type: result.name,
+              label: result.name,
+            },
+            classes: 'autorotate',
+          };
+
+          this.cy.add([obj]);
+        });
+      }
+    }
   }
 
 
@@ -771,4 +871,26 @@ export class AddNewNodeDialog {
     return styleContent;
   }
 
+}
+
+@Component({
+  selector: "app-edgeType-dialog",
+  templateUrl: "./edge-type/edge-type.html",
+  styleUrls: ["./edge-type/edge-type.less"],
+})
+export class EdgeType {
+
+  constructor(public dialogRef: MatDialogRef<EdgeType>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  types = this.data.totalTypes;
+
+  favoriteType = this.types[0];
+
+  submit() {
+
+    this.dialogRef.close(this.favoriteType);
+  }
+  close() {
+    this.dialogRef.close();
+  }
 }

@@ -17,6 +17,10 @@ declare var loadMappingPointer: any;
 declare var clearGraph: any;
 declare var reDrawNodeGraph: any;
 declare var drawStationsOnMap: any;
+declare var createNode: any;
+declare var setDelete: any;
+declare var drawNodesForFmsRos: any;
+declare var setDirectionType: any;
 declare function getDataGraph(): any;
 
 @Component({
@@ -33,13 +37,68 @@ export class CanvasComponent implements OnInit {
   public mapList: any;
   mqttService: any;
   robots = [];
+  isDelete: boolean = false;
+  direction: string = 'bi';
 
   constructor(private service: MappingService, public dialog: MatDialog,) { }
 
   ngOnInit(): void {
+    this.enableNodeGraph = true;
     this.service.getCartons().subscribe(res => {
       this.robotOptions = res;
     })
+  }
+
+  createNode() {
+    this.isDelete = false;
+    setDelete(false);
+    const dialogRef = this.dialog.open(CreateNodeDialogueComponent, {
+      width: '250px',
+      data: { name: '' },
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      drawNodesForFmsRos({
+        pose: {
+          position: {
+            x: 0,
+            y: 0,
+            z: 0,
+          },
+          orientation: {
+            x: 0,
+            y: 0,
+            z: 0,
+            w: 0,
+          },
+        },
+        name: result.name,
+        type: result.type,
+        direction: this.direction,
+      });
+    });
+  }
+
+  deleteObjects() {
+    this.isDelete = !this.isDelete;
+    setDelete(this.isDelete);
+  }
+
+  createEdge(type: any) {
+    this.direction = type;
+    setDirectionType(this.direction);
+  }
+
+  clickSaveButton() {
+    const dialogRef = this.dialog.open(ConfirmSaveDialogueComponent, {
+      height: '150px',
+      data: { name: '' },
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result === 'cancel' || result === undefined) return;
+      else this.saveGraph();
+    });
   }
 
   showGraph() {
@@ -80,7 +139,7 @@ export class CanvasComponent implements OnInit {
     clearCanvas();
     this.showGraphCheck = false;
     loadMapCanvas(this.mqttService, url, 'visualizer', 'topDiv', this.robotOptions.type).then(() => {
-      this.getCartonLocations();  
+      this.getCartonLocations();
     });
   }
 

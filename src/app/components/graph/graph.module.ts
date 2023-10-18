@@ -22,7 +22,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTreeModule } from '@angular/material/tree';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { AddNewNodeDialog, GraphComponent } from './graph/graph.component';
+import { AddNewNodeDialog, EdgeType, GraphComponent } from './graph/graph.component';
 
 
 @NgModule({
@@ -30,7 +30,8 @@ import { AddNewNodeDialog, GraphComponent } from './graph/graph.component';
     TestingComponent,
     AddNodeDialog,
     GraphComponent,
-    AddNewNodeDialog
+    AddNewNodeDialog,
+    EdgeType
   ],
   imports: [
     CommonModule,

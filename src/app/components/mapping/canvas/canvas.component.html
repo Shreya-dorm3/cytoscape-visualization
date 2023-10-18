@@ -5,5 +5,64 @@
                 <canvas id="mapping-canvas"></canvas>
             </div>
         </div>
+        <mat-toolbar *ngIf="!enableNodeGraph" style="background-color: transparent;position: absolute;bottom: 1%;width: auto;">
+        </mat-toolbar>
+      
+        <mat-toolbar *ngIf="enableNodeGraph" style="background-color: transparent;position: absolute;bottom: 1%;width: auto;" id="Node_Menu">
+          <span class="Node-button-container">
+            <button mat-fab color="primary" aria-label="Create Node" (click)="createNode()" class="nodeButton">
+              <i class="fa fa-plus-circle " style="font-size:20px;margin-top: -10px;" matTooltip="Create Node"></i>
+            </button>
+          </span>
+      
+          <span class="Node-button-container">
+            <button mat-fab [color]="direction === 'bi' ? 'success' : 'primary'" aria-label="Bi-Directional Edge" (click)="createEdge('bi')" class="nodeButton">
+              <i class="fa fa-exchange" style="font-size:20px;margin-top: -10px;" matTooltip="Bi-Directional Edge"></i>
+      
+            </button>
+          </span>
+          <span class="Node-button-container">
+            <button mat-fab [color]="direction === 'uni' ? 'success' : 'primary'" aria-label="Uni-directional edge" (click)="createEdge('uni')" class="nodeButton">
+              <i class="fa fa-long-arrow-right" style="font-size:20px;margin-top: -10px;" matTooltip="Uni-Directional Edge"></i>
+      
+            </button>
+          </span>
+          <span class="Node-button-container">
+            <button mat-fab [color]="showGraphCheck === true ? 'success' : 'primary'" aria-label="Show Graph" (click)="showGraph()" class="nodeButton">
+              <i class="fas fa-route" style="font-size:20px;margin-top: -10px;" [matTooltip]="showGraphCheck === false ? 'Show Graph' : 'Hide Graph'"></i>
+      
+            </button>
+          </span>
+      
+          <span class="Node-button-container">
+            <button mat-fab color="primary" aria-label="Save Graph" (click)="clickSaveButton()" class="nodeButton">
+              <i class="fa fa-save" matTooltip="Save Graph" style="font-size:20px;margin-top: -10px;"></i>
+            </button>
+          </span>
+      
+          <span class="Node-button-container">
+            <button mat-fab [color]="isDelete === true ? 'success' : 'primary'" aria-label="Delete" (click)="deleteObjects()" class="nodeButton">
+              <i class="fa fa-trash" matTooltip="Delete Graph" style="font-size:20px;margin-top: -10px;"></i>
+            </button>
+          </span>
+      
+          <span class="Node-button-container">
+            <button mat-fab color="primary" aria-label="Console Graph" class="nodeButton">
+              <i class="fas fa-eye" style="font-size:20px;margin-top: -10px;" matTooltip="Show Heatmap"></i>
+            </button>
+          </span>
+      
+          <span class="Node-button-container">
+            <button mat-fab color="primary" aria-label="Console Graph" (click)="consoleData()" class="nodeButton">
+              <i class="fas fa-desktop" style="font-size:20px;margin-top: -10px;" matTooltip="Console Graph"></i>
+            </button>
+          </span>
+      
+          <span class="Node-button-container">
+            <button mat-fab color="warning" aria-label="Close Nodegraph Menu" (click)="toggleNodeMenu()" class="nodeButton" style="background: rgb(238,49,36);">
+              <i class="fa fa-long-arrow-left" style="font-size:20px;margin-top: -10px;" matTooltip="Close NodeGraph Menu"></i>
+            </button>
+          </span>
+        </mat-toolbar>
     </div>
 </app-navbar>
